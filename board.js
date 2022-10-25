@@ -1,22 +1,18 @@
+const prompt = require("prompt-sync")();
 module.exports = {
   getEmptyBoard: function () {
-    /*
-        Should return a list with 3 sublists.
-        Each sublist should contain 3 time the "." character
-        */
+    return [[".",".","."],[".",".","."],[".",".","."]];
   },
-
+  
   displayBoard: function (board) {
-    /*
-        Should console.log the tic tac toe board in a format similar to
-            1   2   3
-            A   X | O | . 
-            ---+---+---
-            B   X | O | .
-            --+---+---
-            C   0 | X | . 
-            --+---+---
-        */
+    let displayedBoard = `      1   2   3
+  A   ${board[0][0]} | ${board[0][1]} | ${board[0][2]} 
+     ---+---+---
+  B   ${board[1][0]} | ${board[1][1]} | ${board[1][2]}
+     --+---+----
+  C   ${board[2][0]} | ${board[2][1]} | ${board[2][2]} 
+     --+---+----`;
+  console.log(displayedBoard);
   },
 
   isBoardFull: function (board) {
@@ -100,3 +96,4 @@ function checkBoards() {
   console.log("Should return None");
   console.log(getWinningPlayer(board_6));
 }
+//checkBoards();
