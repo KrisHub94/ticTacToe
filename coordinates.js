@@ -11,6 +11,9 @@ module.exports = {
   },
   getPlayerMove: function (board, symbol) {
     let playerCoordinates = prompt("Coordinates: ");
+    if (playerCoordinates.toUpperCase === "QUIT") {
+      
+    }
     let firstIndex = playerCoordinates.slice(0, 1);
     let secondIndex = playerCoordinates.slice(-1);
     while (
@@ -70,14 +73,16 @@ module.exports = {
   },
 
 
-  getRandomAiCoordinates: function (board, current_player) {
-    /*
-        Should return a tuple of 2 numbers. 
-        Each number should be between 0-2.
-        The chosen number should be only a free coordinate from the board.
-        If the board is full (all spots taken by either X or O) than "None"
-        should be returned.
-        */
+  getRandomAiCoordinates: function (board, symbol) {
+    let firstIndex = Math.floor(Math.random() * 3);
+    let secondIndex = Math.floor(Math.random() * 3);
+    if (board[firstIndex][secondIndex] === ".") {
+      board[firstIndex][secondIndex] = symbol;
+      return true;
+    }
+    else {
+      return false;
+    }
   },
 
   getUnbeatableAiCoordinates: function (board, current_player) {

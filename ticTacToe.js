@@ -6,7 +6,7 @@ const {getEmptyBoard,
       } = require("./board");
 const coordinate = require("./coordinates");
 const prompt = require("prompt-sync")();
-const {getPlayerMove, changePlayer} = require("./coordinates");
+const {getPlayerMove, changePlayer, getRandomAiCoordinates} = require("./coordinates");
 
 const HUMAN_VS_HUMAN = 1;
 const RANDOM_AI_VS_RANDOM_AI = 2;
@@ -24,7 +24,19 @@ function main() {
   while (isGameRunning) {
     displayBoard(gameBoard);
 console.log(`Current player: ${playerSymbol}`);
-let hasMadeMove = getPlayerMove(gameBoard, playerSymbol);
+let hasMadeMove;
+if (Number(gameMode) === HUMAN_VS_HUMAN){
+  hasMadeMove = getPlayerMove(gameBoard, playerSymbol);
+}
+else if (Number(gameMode) === HUMAN_VS_RANDOM_AI && playerSymbol === "X") {
+  hasMadeMove = getPlayerMove(gameBoard, playerSymbol);
+}
+else if (Number(gameMode) === HUMAN_VS_RANDOM_AI && playerSymbol === "O") {
+  hasMadeMove = getRandomAiCoordinates(gameBoard, playerSymbol);
+}
+else if (Number(gameMode) === RANDOM_AI_VS_RANDOM_AI) {
+  hasMadeMove = getRandomAiCoordinates(gameBoard, playerSymbol);
+}
 if (getWinningPlayer(playerSymbol, gameBoard) === true){
       displayBoard(gameBoard);
       console.log (`Player ${playerSymbol} wins`);
