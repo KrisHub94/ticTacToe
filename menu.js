@@ -5,33 +5,33 @@ module.exports = {
         "1. Human vs Human \n"+
         "2. Random AI vs Random AI \n"+
         "3. Human vs Random AI \n"+
-        "4. Human vs Unbeatable AI")
+        "4. Human vs Unbeatable AI");
         let userInput = prompt (": ");
-
         console.clear();
+
         while (userInput !== "1" && 
                userInput !== "2" && 
                userInput !== "3" && 
                userInput !== "4" ){
-            userInput = prompt ("Please only Enter a number between 1-4")
-            return ;
+            userInput = prompt ("Please only Enter a number between 1-4: ");
         }                           
         if (userInput === "1"){
             console.log("Human vs Human");
+            return 1;
             
             
         }
         if (userInput === "2"){
-            console.log("Random AI vs Random AI")
-            
+            console.log("Random AI vs Random AI");
+            return 2;
         }
         if (userInput === "3"){
-            console.log("Human vs Random AI")
-            
+            console.log("Human vs Random AI");
+            return 3;
         }
         if (userInput === "4"){
             console.log("Human vs Unbeatable AI")
-            
+            return 4;
         }
     }
  }
