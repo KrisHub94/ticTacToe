@@ -18,9 +18,9 @@ function main() {
   let gameMode = getMenuOption();
   let gameBoard = getEmptyBoard();
   let isGameRunning = true;
-
+  getMenuOption(gameMode);
   while (isGameRunning) {
-    getMenuOption(gameMode);
+    
     displayBoard(gameBoard);
     getPlayerMove(gameBoard);
 
@@ -49,6 +49,22 @@ function main() {
         */
     //let winningPlayer = board.getWinningPlayer(gameBoard);
     //let itsATie = board.isBoardFull(gameBoard);
+  }
+  if (isBoardFull() === true){
+    let userInput = prompt (": ")
+    console.log("Thank you for playing /n"+
+                 "Do you want to play again/n"+
+                 "Enter 'yes' or 'no'.")
+    while( userInput !== "yes".toLowerCase() && userInput !== "no".toLowerCase()){
+        console.log("Please only enter 'yes' or 'no'.")
+        return;
+    }
+    if (userInput === "yes"){
+      return getMenuOption();
+    }
+    if (userInput === "no"){
+      process.exit()
+    }
   }
 }
 
