@@ -1,4 +1,4 @@
-const {getMenuOption,MenuAscIIArt}= require("./menu"); // use it e.g. like menu.get_menu_option()
+const {getMenuOption,MenuAscIIArt, showExitPrompt}= require("./menu"); // use it e.g. like menu.get_menu_option()
 const {getEmptyBoard, 
       displayBoard,
       isBoardFull,
@@ -25,45 +25,26 @@ function main() {
     displayBoard(gameBoard);
 console.log(`Current player: ${playerSymbol}`);
 let hasMadeMove = getPlayerMove(gameBoard, playerSymbol);
+if (getWinningPlayer(playerSymbol, gameBoard) === true){
+      displayBoard(gameBoard);
+      console.log (`Player ${playerSymbol} wins`);
+      let restart = showExitPrompt();
+      if (restart) {
+        return main();
+      }
+}
+if (isBoardFull(gameBoard) === true){
+      displayBoard(gameBoard);
+        
+      console.log("Thank you for playing");
+      let restart = showExitPrompt();
+      if (restart) {
+        return main();
+      }
+      }
 if (hasMadeMove) {
   playerSymbol = changePlayer(playerSymbol);
 }
-    if (isBoardFull(gameBoard) === true){
-        console.log(displayBoard(gameBoard));
-        
-        console.log("Thank you for playing \n"+
-                     "Do you want to play again \n"+
-                     "Enter 'yes' or 'no'.")
-        let userInput = prompt (": ")
-
-        while( userInput !== "yes".toLowerCase() && userInput !== "no".toLowerCase()){
-            console.log("Please only enter 'yes' or 'no'.")
-            return userInput = prompt (": ");
-        }
-        if (userInput === "yes".toLowerCase()){
-          return getMenuOption(gameMode);
-        }
-        if (userInput === "no".toLowerCase()){
-          process.exit()
-        }
-      }
-      if (getWinningPlayer(playerSymbol, gameBoard) === true){
-        console.log(displayBoard(gameBoard))
-        console.log ("Congratulations "+ playerSymbol+" Wins \n"+
-                     "Do you want to play again \n"+
-                     "Enter 'yes' or 'no'.");
-                     let userInput = prompt (": ")
-
-        while( userInput !== "yes".toLowerCase() && userInput !== "no".toLowerCase()){
-            console.log("Please only enter 'yes' or 'no'.")
-            return userInput = prompt (": ");
-      }
-      if (userInput === "yes".toLowerCase()){
-        return getMenuOption(gameMode);
-      }
-      if (userInput === "no".toLowerCase()){
-        process.exit()
-      }
 
     /* TODO
         in each new iteration of the while loop the program should 
@@ -89,5 +70,5 @@ if (hasMadeMove) {
     //let itsATie = board.isBoardFull(gameBoard);
   }
 }
-}
+
 main();

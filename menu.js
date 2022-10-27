@@ -43,6 +43,22 @@ module.exports = {
             console.log("Human vs Unbeatable AI")
             return 4;
         }
+    },
+    showExitPrompt: function() {
+        console.log( "Do you want to play again ?"+
+        "Enter 'yes' or 'no'.");
+        let userInput = prompt (": ");
+
+        while( userInput !== "yes".toLowerCase() && userInput !== "no".toLowerCase()){
+            console.log("Please only enter 'yes' or 'no'.")
+            return userInput = prompt (": ");
+        }
+        if (userInput === "yes".toLowerCase()){
+            return true;
+        }
+        if (userInput === "no".toLowerCase()){
+            process.exit()
+        }
     }
  }
 
