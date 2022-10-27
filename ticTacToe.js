@@ -5,24 +5,28 @@ const {getEmptyBoard,
       } = require("./board");
 const coordinate = require("./coordinates");
 const prompt = require("prompt-sync")();
-const {getPlayerMove} = require("./coordinates");
+const {getPlayerMove, changePlayer} = require("./coordinates");
 
 const HUMAN_VS_HUMAN = 1;
 const RANDOM_AI_VS_RANDOM_AI = 2;
 const HUMAN_VS_RANDOM_AI = 3;
 const HUMAN_VS_UNBEATABLE_AI = 4;
-let playerSymbol = "X";
 
 
 function main() {
+  let playerSymbol = "X";
   let gameMode = getMenuOption();
   let gameBoard = getEmptyBoard();
   let isGameRunning = true;
 
   while (isGameRunning) {
     displayBoard(gameBoard);
-    getPlayerMove(gameBoard);
-
+    console.log(`Current player: ${playerSymbol}`);
+    let hasMadeMove = getPlayerMove(gameBoard, playerSymbol);
+    if (hasMadeMove) {
+      playerSymbol = changePlayer(playerSymbol);
+    }
+  
     /* TODO
 
         in each new iteration of the while loop the program should 
