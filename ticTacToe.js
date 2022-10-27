@@ -6,7 +6,7 @@ const {getEmptyBoard,
       } = require("./board");
 const coordinate = require("./coordinates");
 const prompt = require("prompt-sync")();
-const {getPlayerMove, changePlayer, getRandomAiCoordinates} = require("./coordinates");
+const {getPlayerMove, changePlayer, getRandomAiCoordinates, getUnbeatableAiCoordinates} = require("./coordinates");
 
 const HUMAN_VS_HUMAN = 1;
 const RANDOM_AI_VS_RANDOM_AI = 2;
@@ -15,37 +15,42 @@ const HUMAN_VS_UNBEATABLE_AI = 4;
 
 
 function main() {
-    console.log('\x1b[36m%s\x1b[0m',MenuAscIIArt)
+    console.log('\x1b[36m%s\x1b[0m',MenuAscIIArt[0]);
   let playerSymbol = "X";
   let gameMode = getMenuOption();
   let gameBoard = getEmptyBoard();
   let isGameRunning = true;
-  
   while (isGameRunning) {
-    displayBoard(gameBoard);
-console.log(`Current player: ${playerSymbol}`);
-let hasMadeMove;
-if (Number(gameMode) === HUMAN_VS_HUMAN){
-  hasMadeMove = getPlayerMove(gameBoard, playerSymbol);
-}
-else if (Number(gameMode) === HUMAN_VS_RANDOM_AI && playerSymbol === "X") {
-  hasMadeMove = getPlayerMove(gameBoard, playerSymbol);
-}
-else if (Number(gameMode) === HUMAN_VS_RANDOM_AI && playerSymbol === "O") {
-  hasMadeMove = getRandomAiCoordinates(gameBoard, playerSymbol);
-}
-else if (Number(gameMode) === RANDOM_AI_VS_RANDOM_AI) {
-  hasMadeMove = getRandomAiCoordinates(gameBoard, playerSymbol);
-}
-if (getWinningPlayer(playerSymbol, gameBoard) === true){
+  displayBoard(gameBoard);
+  console.log(`Current player: ${playerSymbol}`);
+  let hasMadeMove;
+  if (Number(gameMode) === HUMAN_VS_HUMAN){
+    hasMadeMove = getPlayerMove(gameBoard, playerSymbol);
+  }
+  else if (Number(gameMode) === HUMAN_VS_RANDOM_AI && playerSymbol === "X") {
+    hasMadeMove = getPlayerMove(gameBoard, playerSymbol);
+  }
+  else if (Number(gameMode) === HUMAN_VS_RANDOM_AI && playerSymbol === "O") {
+    hasMadeMove = getRandomAiCoordinates(gameBoard, playerSymbol);
+  }
+  else if (Number(gameMode) === RANDOM_AI_VS_RANDOM_AI) {
+    hasMadeMove = getRandomAiCoordinates(gameBoard, playerSymbol);
+  }
+  else if (Number(gameMode) === HUMAN_VS_UNBEATABLE_AI && playerSymbol === "X") {
+    hasMadeMove = getPlayerMove(gameBoard, playerSymbol);
+  }
+  else if (Number(gameMode) === HUMAN_VS_UNBEATABLE_AI && playerSymbol === "O") {
+    hasMadeMove = getUnbeatableAiCoordinates(gameBoard, playerSymbol);
+  }
+  if (getWinningPlayer(playerSymbol, gameBoard) === true){
       displayBoard(gameBoard);
       console.log (`Player ${playerSymbol} wins`);
       let restart = showExitPrompt();
       if (restart) {
         return main();
       }
-}
-if (isBoardFull(gameBoard) === true){
+  }
+  if (isBoardFull(gameBoard) === true){
       displayBoard(gameBoard);
         
       console.log("Thank you for playing");
@@ -53,10 +58,10 @@ if (isBoardFull(gameBoard) === true){
       if (restart) {
         return main();
       }
-      }
-if (hasMadeMove) {
-  playerSymbol = changePlayer(playerSymbol);
-}
+  }
+  if (hasMadeMove) {
+    playerSymbol = changePlayer(playerSymbol);
+  }
 
     /* TODO
         in each new iteration of the while loop the program should 

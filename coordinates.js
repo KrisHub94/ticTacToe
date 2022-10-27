@@ -12,8 +12,9 @@ module.exports = {
   getPlayerMove: function (board, symbol) {
     let playerCoordinates = prompt("Coordinates: ");
     if (playerCoordinates.toUpperCase === "QUIT") {
-      
+      process.exit();
     }
+    
     let firstIndex = playerCoordinates.slice(0, 1);
     let secondIndex = playerCoordinates.slice(-1);
     while (
@@ -85,16 +86,190 @@ module.exports = {
     }
   },
 
-  getUnbeatableAiCoordinates: function (board, current_player) {
-    /*
-        Should return an array of 2 numbers. 
-        Each number should be between 0-2.
-        The chosen number should be only a free coordinate from the board.
-        The chosen coordinate should always stop the other player from winning or
-        maximize the current player's chances to win.
-        If the board is full (all spots taken by either X or O) than "None"
-        should be returned.
-        */
+  getUnbeatableAiCoordinates: function (board, symbol) {
+    let firstIndex;
+    let secondIndex;
+    if ((board[0][0] === "O" && board[0][1] === "O" && board[0][2] === ".") ||
+    (board[0][0] === "X" && board[0][1] === "X" && board[0][2] === ".")) {
+      firstIndex = 0;
+      secondIndex = 2;
+    }
+    else if ((board[0][0] === "O" && board[0][1] === "." && board[0][2] === "O") ||
+    (board[0][0] === "X" && board[0][1] === "." && board[0][2] === "X")) {
+      firstIndex = 0;
+      secondIndex = 1;
+    }
+    else if ((board[0][0] === "." && board[0][1] === "O" && board[0][2] === "O") ||
+    (board[0][0] === "." && board[0][1] === "X" && board[0][2] === "X")) {
+      firstIndex = 0;
+      secondIndex = 0;
+    }
+    else if ((board[1][0] === "O" && board[1][1] === "O" && board[1][2] === ".") ||
+    (board[1][0] === "X" && board[1][1] === "X" && board[1][2] === ".")) {
+      firstIndex = 1;
+      secondIndex = 2;
+    }
+    else if ((board[1][0] === "O" && board[1][1] === "." && board[1][2] === "O") ||
+    (board[1][0] === "X" && board[1][1] === "." && board[1][2] === "X")) {
+      firstIndex = 1;
+      secondIndex = 1;
+    }
+    else if ((board[1][0] === "." && board[1][1] === "O" && board[1][2] === "O") ||
+    (board[1][0] === "." && board[1][1] === "X" && board[1][2] === "X")) {
+      firstIndex = 1;
+      secondIndex = 0;
+    }
+    else if ((board[2][0] === "O" && board[2][1] === "O" && board[2][2] === ".") ||
+    (board[2][0] === "X" && board[2][1] === "X" && board[2][2] === ".")) {
+      firstIndex = 2;
+      secondIndex = 2;
+    }
+    else if ((board[2][0] === "O" && board[2][1] === "." && board[2][2] === "O") ||
+    (board[2][0] === "X" && board[2][1] === "." && board[2][2] === "X")) {
+      firstIndex = 2;
+      secondIndex = 1;
+    }
+    else if ((board[2][0] === "." && board[2][1] === "O" && board[2][2] === "O") ||
+    (board[2][0] === "." && board[2][1] === "X" && board[2][2] === "X")) {
+      firstIndex = 2;
+      secondIndex = 0;
+    }
+    else if ((board[0][0] === "O" && board[1][1] === "O" && board[2][2] === ".") ||
+    (board[0][0] === "X" && board[1][1] === "X" && board[2][2] === ".")) {
+      firstIndex = 2;
+      secondIndex = 2;
+    }
+    else if ((board[0][0] === "." && board[1][1] === "O" && board[2][2] === "O") ||
+    (board[0][0] === "." && board[1][1] === "X" && board[2][2] === "X")) {
+      firstIndex = 0;
+      secondIndex = 0;
+    }
+    else if ((board[0][2] === "O" && board[1][1] === "O" && board[2][0] === ".") ||
+    (board[0][2] === "X" && board[1][1] === "X" && board[2][0] === ".")) {
+      firstIndex = 2;
+      secondIndex = 0;
+    }
+    else if ((board[0][2] === "." && board[1][1] === "O" && board[2][0] === "O") ||
+    (board[0][2] === "." && board[1][1] === "X" && board[2][0] === "X")) {
+      firstIndex = 0;
+      secondIndex = 2;
+    }
+    else if ((board[0][2] === "O" && board[1][1] === "." && board[2][0] === "O") ||
+    (board[0][2] === "X" && board[1][1] === "." && board[2][0] === "X") ||
+    (board[0][0] === "O" && board[1][1] === "." && board[2][2] === "O") ||
+    (board[0][0] === "X" && board[1][1] === "." && board[2][2] === "X")) {
+      firstIndex = 1;
+      secondIndex = 1;
+    }
+    else if ((board[0][0] === "X" && board[1][0] === "X" && board[2][0] === ".") ||
+    (board[0][0] === "O" && board[1][0] === "O" && board[2][0] === ".")) {
+      firstIndex = 2;
+      secondIndex = 0;
+    }
+    else if ((board[0][0] === "X" && board[1][0] === "." && board[2][0] === "X") ||
+    (board[0][0] === "O" && board[1][0] === "." && board[2][0] === "O")) {
+      firstIndex = 1;
+      secondIndex = 0;
+    }
+    else if ((board[0][0] === "." && board[1][0] === "X" && board[2][0] === "X") ||
+    (board[0][0] === "." && board[1][0] === "O" && board[2][0] === "O")) {
+      firstIndex = 0;
+      secondIndex = 0;
+    }
+    else if ((board[0][1] === "X" && board[1][1] === "X" && board[2][1] === ".") ||
+    (board[0][1] === "O" && board[1][1] === "O" && board[2][1] === ".")) {
+      firstIndex = 2;
+      secondIndex = 1;
+    }
+    else if ((board[0][1] === "X" && board[1][1] === "." && board[2][1] === "X") ||
+    (board[0][1] === "O" && board[1][1] === "." && board[2][1] === "O")) {
+      firstIndex = 1;
+      secondIndex = 1;
+    }
+    else if ((board[0][1] === "." && board[1][1] === "X" && board[2][1] === "X") ||
+    (board[0][1] === "." && board[1][1] === "O" && board[2][1] === "O")) {
+      firstIndex = 0;
+      secondIndex = 1;
+    }
+    else if ((board[0][2] === "X" && board[1][2] === "X" && board[2][2] === ".") ||
+    (board[0][2] === "O" && board[1][2] === "O" && board[2][2] === ".")) {
+      firstIndex = 2;
+      secondIndex = 2;
+    }
+    else if ((board[0][2] === "X" && board[1][2] === "." && board[2][2] === "X") ||
+    (board[0][2] === "O" && board[1][2] === "." && board[2][2] === "O")) {
+      firstIndex = 1;
+      secondIndex = 2;
+    }
+    else if ((board[0][2] === "." && board[1][2] === "X" && board[2][2] === "X") ||
+    (board[0][2] === "." && board[1][2] === "O" && board[2][2] === "O")) {
+      firstIndex = 0;
+      secondIndex = 2;
+    }
+    else if (board[1][1] === ".") {
+      firstIndex = 1;
+      secondIndex = 1;
+    }
+    else if ((board[0][0] === "X" && board[2][2] === "X" && (board[0][2] || board[2][0]) === ".") ||
+    (board[0][0] === "O" && board[2][2] === "O" && (board[0][2] || board[2][0]) === ".")) {
+      if (board[0][1] === ".") {
+        firstIndex = 0;
+        secondIndex = 1;
+      }
+      else {
+        firstIndex = 2;
+        secondIndex = 1;
+      }
+    }
+    else if ((board[0][2] === "X" && board[2][0] === "X" && (board[0][0] || board[2][2]) === ".") ||
+    (board[0][2] === "O" && board[2][0] === "O" && (board[0][0] || board[2][2]) === ".")) {
+      if (board[0][1] === ".") {
+        firstIndex = 0;
+        secondIndex = 1;
+      }
+      else if (board[2][1] === "."){
+        firstIndex = 2;
+        secondIndex = 1;
+      }
+    }
+    else if (((board[0][1] && board[1][0]) === "X") && ((board[0][0] && board[0][2] && board[2][0]) === ".") ||
+    ((board[0][1] && board[1][0]) === "O") && ((board[0][0] && board[0][2] && board[2][0]) === ".")) {
+      firstIndex = 0;
+      secondIndex = 0;
+    }
+    else if (((board[0][1] && board[1][2]) === "X") && ((board[0][0] && board[0][2] && board[2][2]) === ".") ||
+    ((board[0][1] && board[1][2]) === "O") && ((board[0][0] && board[0][2] && board[2][2]) === ".")) {
+      firstIndex = 0;
+      secondIndex = 2;
+    }
+    else if (((board[2][1] && board[1][2]) === "X") && ((board[2][2] && board[0][2] && board[2][0]) === ".") ||
+    ((board[2][1] && board[1][2]) === "O") && ((board[2][0] && board[0][2] && board[2][2]) === ".")) {
+      firstIndex = 2;
+      secondIndex = 2;
+    }
+    else if (((board[2][1] && board[1][0]) === "X") && ((board[0][0] && board[2][0] && board[2][2]) === ".") ||
+    ((board[2][1] && board[1][0]) === "O") && ((board[0][0] && board[2][0] && board[2][2]) === ".")) {
+      firstIndex = 2;
+      secondIndex = 0;
+    }
+    else if (board[0][0] === ".") {
+      firstIndex = 0;
+      secondIndex = 0;
+    }
+    else if (board[0][2] === ".") {
+      firstIndex = 0;
+      secondIndex = 2;
+    }
+    else if (board[2][0] === ".") {
+      firstIndex = 2;
+      secondIndex = 0;
+    }
+    else if (board[2][2] === ".") {
+      firstIndex = 2;
+      secondIndex = 2;
+    }
+    board[firstIndex][secondIndex] = symbol;
+    return true;
   },
 };
 

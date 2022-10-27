@@ -5,7 +5,7 @@ module.exports = {
   },
   
   displayBoard: function (board) {
-    console.clear;
+    console.clear();
     let displayedBoard = `      1   2   3
   A   ${board[0][0]} | ${board[0][1]} | ${board[0][2]} 
      ---+---+---
