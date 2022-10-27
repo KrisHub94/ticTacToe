@@ -1,6 +1,7 @@
-const menu = require("./menu"); // use it e.g. like menu.get_menu_option()
+const {getMenuOption}= require("./menu"); // use it e.g. like menu.get_menu_option()
 const {getEmptyBoard, 
       displayBoard,
+      isBoardFull,
       } = require("./board");
 const coordinate = require("./coordinates");
 const prompt = require("prompt-sync")();
@@ -14,11 +15,12 @@ let playerSymbol = "X";
 
 
 function main() {
-  let gameMode = menu.getMenuOption();
+  let gameMode = getMenuOption();
   let gameBoard = getEmptyBoard();
   let isGameRunning = true;
 
   while (isGameRunning) {
+    getMenuOption(gameMode);
     displayBoard(gameBoard);
     getPlayerMove(gameBoard);
 
