@@ -1,8 +1,15 @@
 const prompt = require("prompt-sync")();
-let playerSymbol = "X";
 
 module.exports = {
-  getPlayerMove: function (board) {
+  changePlayer: function (symbol) {
+    if (symbol === "X"){
+      return "O";
+    }
+    else if (symbol === "O") {
+      return "X";
+    }
+  },
+  getPlayerMove: function (board, symbol) {
     let playerCoordinates = prompt("Coordinates: ");
     let firstIndex = playerCoordinates.slice(0, 1);
     let secondIndex = playerCoordinates.slice(-1);
@@ -42,10 +49,12 @@ module.exports = {
       secondIndex = 2;
     }
     if (board[firstIndex][secondIndex] === "."){
-    board[firstIndex][secondIndex] = playerSymbol;
+      board[firstIndex][secondIndex] = symbol;
+      return true   
     }
     else {
       console.log("This spot is already taken");
+      return false
     }
     /*
         Should return the read coordinates for the tic tac toe board from the terminal.
@@ -59,6 +68,7 @@ module.exports = {
         should stop.
         */
   },
+
 
   getRandomAiCoordinates: function (board, current_player) {
     /*

@@ -6,26 +6,28 @@ const {getEmptyBoard,
       } = require("./board");
 const coordinate = require("./coordinates");
 const prompt = require("prompt-sync")();
-const {getPlayerMove} = require("./coordinates");
+const {getPlayerMove, changePlayer} = require("./coordinates");
 
 const HUMAN_VS_HUMAN = 1;
 const RANDOM_AI_VS_RANDOM_AI = 2;
 const HUMAN_VS_RANDOM_AI = 3;
 const HUMAN_VS_UNBEATABLE_AI = 4;
-let playerSymbol = "X";
 
 
 function main() {
     console.log('\x1b[36m%s\x1b[0m',MenuAscIIArt)
+  let playerSymbol = "X";
   let gameMode = getMenuOption();
   let gameBoard = getEmptyBoard();
   let isGameRunning = true;
-  let symbol = "X" || "O";
-
+  
   while (isGameRunning) {
     displayBoard(gameBoard);
-    getPlayerMove(gameBoard);
-
+console.log(`Current player: ${playerSymbol}`);
+let hasMadeMove = getPlayerMove(gameBoard, playerSymbol);
+if (hasMadeMove) {
+  playerSymbol = changePlayer(playerSymbol);
+}
     if (isBoardFull(gameBoard) === true){
         console.log(displayBoard(gameBoard));
         
@@ -45,9 +47,9 @@ function main() {
           process.exit()
         }
       }
-      if (getWinningPlayer(symbol, gameBoard) === true){
+      if (getWinningPlayer(playerSymbol, gameBoard) === true){
         console.log(displayBoard(gameBoard))
-        console.log ("Congratulations "+ symbol+" Wins \n"+
+        console.log ("Congratulations "+ playerSymbol+" Wins \n"+
                      "Do you want to play again \n"+
                      "Enter 'yes' or 'no'.");
                      let userInput = prompt (": ")
