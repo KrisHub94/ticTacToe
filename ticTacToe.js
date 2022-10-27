@@ -20,7 +20,6 @@ function main() {
   let isGameRunning = true;
 
   while (isGameRunning) {
-    getMenuOption(gameMode);
     displayBoard(gameBoard);
     getPlayerMove(gameBoard);
 

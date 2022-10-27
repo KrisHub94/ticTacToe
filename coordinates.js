@@ -11,8 +11,9 @@ module.exports = {
       firstIndex.toUpperCase() === "B" ||
       firstIndex.toUpperCase() === "C") ||
       Number(secondIndex) < 1 ||
-          Number(secondIndex) > 3 ||
-          playerCoordinates.length !== 2 ) 
+      Number(secondIndex) > 3 ||
+      playerCoordinates.length !== 2 
+      ) 
           {
             playerCoordinates = prompt("Please enter valid Coordinates (A1, C2, etc): ");
             firstIndex = playerCoordinates.slice(0, 1);
@@ -40,11 +41,12 @@ module.exports = {
     else if(Number(secondIndex) === 3) {
       secondIndex = 2;
     }
-    while (board[firstIndex][secondIndex] === "X" ||
-          board[firstIndex][secondIndex] === "O") {
-            playerCoordinates = prompt("There is already an 'X' or 'O' at your coordinates: ");
-          }
+    if (board[firstIndex][secondIndex] === "."){
     board[firstIndex][secondIndex] = playerSymbol;
+    }
+    else {
+      console.log("This spot is already taken");
+    }
     /*
         Should return the read coordinates for the tic tac toe board from the terminal.
         The coordinates should be in the format  letter, number where the letter is 
