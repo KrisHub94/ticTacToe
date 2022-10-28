@@ -22,6 +22,10 @@ module.exports = {
         let userInput = prompt (": ");
         console.clear();
 
+        if (userInput.toLowerCase() === "quit") {
+            console.log("Thank you for playing!");
+            process.exit();
+        }
         while (userInput !== "1" && 
                userInput !== "2" && 
                userInput !== "3" && 

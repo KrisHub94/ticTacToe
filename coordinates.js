@@ -11,7 +11,8 @@ module.exports = {
   },
   getPlayerMove: function (board, symbol) {
     let playerCoordinates = prompt("Coordinates: ");
-    if (playerCoordinates.toUpperCase === "QUIT") {
+    if (playerCoordinates.toLowerCase() === "quit") {
+      console.log("Thank you for playing!");
       process.exit();
     }
     
